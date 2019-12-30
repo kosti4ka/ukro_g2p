@@ -124,7 +124,7 @@ class G2PModel(PreTrainedG2PModel):
 
         self.maybe_move_to_cuda()
 
-    def forward(self, x, x_length, y=None, p_length=None, n_best=None):
+    def forward(self, x, x_length, y=None, p_length=None, n_best=1):
         # TODO rewrite desscription
 
         encoder_out, encoder_hc = self.encoder(x, x_length)
