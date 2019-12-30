@@ -2,7 +2,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch
 
-#TODO remove config, send par explicitly
+# TODO remove config, send par explicitly
+
 
 class Encoder(nn.Module):
 
@@ -139,7 +140,7 @@ class Beam(object):
             # masking scores that came from already finished seq since they do not make sence
             mask = (self.nextYs[-1] == self.eos).unsqueeze(1).expand_as(workd_lk)
             workd_lk = workd_lk.masked_fill(mask, -float("Inf"))
-            mask = mask * self.tt.eye(num_words).type(self.tt.ByteTensor)[self.eos].expand_as(mask)
+            mask = mask * self.tt.eye(num_words).type(self.tt.bool)[self.eos].expand_as(mask)
             workd_lk = workd_lk.masked_fill(mask, 0)
             # normalize scores
             beam_lk = workd_lk + self.scores.unsqueeze(1).expand_as(workd_lk) * ((1 - (self.nextYs[-1] == self.eos).type(self.tt.FloatTensor).unsqueeze(1).expand_as(workd_lk)) * (len(self.nextYs) - 1) + 1)
