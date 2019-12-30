@@ -16,6 +16,7 @@ class G2P(object):
 
         self.model = G2PModel.from_pretrained(model_name)
         self.tokenizer = G2PTokenizer.from_pretrained(model_name)
+        self.model.eval()
 
     def __call__(self, word, n_best=None):
 
