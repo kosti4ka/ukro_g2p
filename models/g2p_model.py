@@ -32,8 +32,6 @@ class G2PConfig(dict):
         config_file = configparser.ConfigParser()
         config_file.read(model_config_file)
 
-        print(model_config_file)
-
         self.padding = config_file['VocabConfig']['padding']
         # TODO simplify this part - use same bos, eos symbol for both phonemes and graphemes
         self.decoder_bos = config_file['VocabConfig']['phoneme_bos']
