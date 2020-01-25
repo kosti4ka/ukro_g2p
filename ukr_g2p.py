@@ -7,7 +7,7 @@ import torch
 from torch.autograd import Variable
 
 from models.g2p_model import G2PModel, PRETRAINED_MODEL_MAP
-from utils.tokenization import G2PTokenizer
+from tokenization import G2PTokenizer
 
 
 class G2P(object):
