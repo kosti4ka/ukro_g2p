@@ -2,7 +2,7 @@ from pathlib import Path
 from models.g2p_model import G2PConfig
 
 PRETRAINED_TOKENIZER_MAP = {
-    'ukr-base-uncased': "../trained_models/g2p_ukr"
+    'ukr-base-uncased': "trained_models/g2p_ukr"
 }
 CONFIG_SUFFIX = '.config'
 
