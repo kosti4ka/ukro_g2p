@@ -136,15 +136,7 @@ class Beam(object):
 
         # Sum the previous scores.
         if len(self.prevKs) > 0:
-
-            # masking scores that came from already finished seq since they do not make sence
-            mask = (self.nextYs[-1] == self.eos).unsqueeze(1).expand_as(workd_lk)
-            workd_lk = workd_lk.masked_fill(mask, -float("Inf"))
-            mask = mask * self.tt.eye(num_words).type(self.tt.bool)[self.eos].expand_as(mask)
-            workd_lk = workd_lk.masked_fill(mask, 0)
-            # normalize scores
-            beam_lk = workd_lk + self.scores.unsqueeze(1).expand_as(workd_lk) * ((1 - (self.nextYs[-1] == self.eos).type(self.tt.FloatTensor).unsqueeze(1).expand_as(workd_lk)) * (len(self.nextYs) - 1) + 1)
-            beam_lk = beam_lk / ((1 - (self.nextYs[-1] == self.eos).type(self.tt.FloatTensor).unsqueeze(1).expand_as(workd_lk)) * len(self.nextYs) + 1)
+            beam_lk = workd_lk + self.scores.unsqueeze(1).expand_as(workd_lk)
         else:
             beam_lk = workd_lk[0]
 
@@ -159,7 +151,7 @@ class Beam(object):
         self.prevKs.append(prev_k)
         self.nextYs.append(best_scores_id - prev_k * num_words)
         # End condition is when n-best are EOS.
-        if all(y == self.eos for y in self.nextYs[-1]):
+        if self.nextYs[-1][0] == self.eos:
             self.done = True
         return self.done
 
