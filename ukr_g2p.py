@@ -18,7 +18,7 @@ class G2P(object):
         self.tokenizer = G2PTokenizer.from_pretrained(model_name)
         self.model.eval()
 
-    def __call__(self, word, n_best=None):
+    def __call__(self, word):
 
         # map word's chars into graphemes idx
         graphemes = self.tokenizer.tokenize_graphemes(word)
@@ -28,9 +28,9 @@ class G2P(object):
         graphemes = Variable(torch.LongTensor(graphemes).unsqueeze(0))
         g_length = Variable(torch.LongTensor(g_length))
 
-        phonemes = self.model(graphemes, g_length, n_best=n_best).tolist()[0]
+        phonemes = self.model(graphemes, g_length).tolist()[0]
 
-        return [self.tokenizer.convert_ids_to_phonemes(p) for p in phonemes]
+        return self.tokenizer.convert_ids_to_phonemes(phonemes)
 
 
 if __name__ == '__main__':
@@ -42,13 +42,11 @@ if __name__ == '__main__':
     parser.add_argument('-m', '--model_name', required=False, type=str, default='ukr-base-uncased',
                         choices=PRETRAINED_MODEL_MAP.keys(),
                         help='Trained model name')
-    parser.add_argument('-nb', '--n_best', required=False, type=int, default=1,
-                        help='Number of best pronunciations')
 
     # parse
     script_args = parser.parse_args()
 
     g2p = G2P('ukr-base-uncased')
-    pron = g2p(script_args.word, n_best=script_args.n_best)
+    pron = g2p(script_args.word)
 
-    [print(f"{' '.join(p)}") for p in pron]
+    print(f"{' '.join(pron)}")

@@ -157,7 +157,7 @@ class G2PModel(PreTrainedG2PModel):
             h, c = hc
             h.data.copy_(h.data.index_select(1, beam.get_current_origin()))
             c.data.copy_(c.data.index_select(1, beam.get_current_origin()))
-        return torch.LongTensor(beam.get_hyp(n_best=n_best)).unsqueeze(0)
+        return torch.LongTensor(beam.get_hyp(0)).unsqueeze(0)
 
     def add_optimizer_and_losses(self):
         self.optimizer = SGD(self.parameters(), lr=self.lr, weight_decay=self.weight_decay)

@@ -155,14 +155,10 @@ class Beam(object):
             self.done = True
         return self.done
 
-    def get_hyp(self, n_best):
+    def get_hyp(self, k):
         """Get hypotheses."""
-        n_best = min(n_best, self.size)
         hyp = []
-        for n in range(n_best):
-            k = n
-            hyp.append([])
-            for j in range(len(self.prevKs) - 1, -1, -1):
-                hyp[n].append(self.nextYs[j + 1][k])
-                k = self.prevKs[j][k]
-        return [h[::-1] for h in hyp]
+        for j in range(len(self.prevKs) - 1, -1, -1):
+            hyp.append(self.nextYs[j + 1][k])
+            k = self.prevKs[j][k]
+        return hyp[::-1]
