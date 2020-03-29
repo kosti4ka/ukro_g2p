@@ -132,11 +132,11 @@ class G2PModel(PreTrainedG2PModel):
         if y is not None:
             out = self.decoder(y, p_length, encoder_hc, context=encoder_out if self.attention else None)
         else:
-            out = self._generate(encoder_hc, context=encoder_out if self.attention else None, n_best=n_best)
+            out = self._generate(encoder_hc, context=encoder_out if self.attention else None)
 
         return out
 
-    def _generate(self, hc, context=None, n_best=1):
+    def _generate(self, hc, context=None):
         beam = Beam(self.config)
         h, c = hc
         # Make a beam_size batch.
@@ -161,6 +161,7 @@ class G2PModel(PreTrainedG2PModel):
 
     def add_optimizer_and_losses(self):
         self.optimizer = SGD(self.parameters(), lr=self.lr, weight_decay=self.weight_decay)
+        # TODO move 102 to parameters
         self.loss = nn.NLLLoss(ignore_index=102)
 
     def maybe_move_to_cuda(self):
