@@ -22,9 +22,12 @@ def main(model, dataset, resume, out_dir):
 
     # make dir and files
     out_dir.mkdir(parents=True, exist_ok=True)
-    ref_path.unlink()
-    hyp_path.unlink()
-    scores_path.unlink()
+    try:
+        ref_path.unlink()
+        hyp_path.unlink()
+        scores_path.unlink()
+    except:
+        pass
 
     # setup data_loader instances
     data_loader = DataLoader(dataset, batch_size=1, shuffle=False, collate_fn=_collate_fn, num_workers=1)

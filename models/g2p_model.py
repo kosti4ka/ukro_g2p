@@ -89,7 +89,7 @@ class PreTrainedG2PModel(nn.Module):
         # instantiate model
         model = cls(config)
 
-        # loading weigths
+        # loading weights
         model.load_state_dict(torch.load(model_weigths_file, map_location=lambda storage, loc: storage))
 
         return model
