@@ -27,7 +27,7 @@ if __name__ == '__main__':
     datasets = {'train': LexiconDataset(args.dataset, split='train'),
                   'dev': LexiconDataset(args.dataset, split='dev')}
 
-    trainer = Trainer(model, datasets, optimizer, loss, epochs=500, batch_size=256,
+    trainer = Trainer(model, datasets, optimizer, loss, epochs=100, batch_size=256,
                       experiment_name=args.experiment_name,
                       logging_freq=10, restore_epoch=args.restore_epoch)
     trainer.train_and_validate()
