@@ -1,5 +1,4 @@
 import torch.nn as nn
-from torch.optim import Adagrad, SGD
 import torch
 # from .decoder import Decoder
 # from .encoder import Encoder
@@ -30,7 +29,7 @@ class G2PConfig(dict):
 
         # reading config file
         config_file = configparser.ConfigParser()
-        config_file.read(model_config_file)
+        config_file.read(model_config_file, encoding='utf8')
 
         self.padding = config_file['VocabConfig']['padding']
         # TODO simplify this part - use same bos, eos symbol for both phonemes and graphemes
@@ -102,7 +101,7 @@ class G2PModel(PreTrainedG2PModel):
 
         # init
         self.config = config
-        self.use_cuda = config.use_cuda
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
         # encoder
         self.encoder = Encoder(config)
@@ -114,15 +113,6 @@ class G2PModel(PreTrainedG2PModel):
         # generator
         self.beam_size = config.beam_size
         self.max_generate_len = config.max_generate_len
-
-        # optimizer
-        self.lr = config.lr
-        self.weight_decay = config.weight_decay
-
-        # init optimizer
-        self.add_optimizer_and_losses()
-
-        self.maybe_move_to_cuda()
 
     def forward(self, x, x_length, y=None, p_length=None, n_best=1):
         # TODO rewrite desscription
@@ -145,13 +135,11 @@ class G2PModel(PreTrainedG2PModel):
         if context is not None:
             context = context.expand(beam.size, context.size(1), context.size(2))
         p_length = Variable(torch.from_numpy(np.array([1])))
-        p_length = p_length.expand(beam.size)
-        if self.use_cuda:
-            p_length = p_length.cuda()
+        p_length = p_length.expand(beam.size).to(self.device)
 
         for i in range(self.max_generate_len):
             x = beam.get_current_state()
-            o, hc = self.decoder(Variable(x.unsqueeze(1)), p_length, (h, c), context=context)
+            o, hc = self.decoder(Variable(x.unsqueeze(1)).to(self.device), p_length, (h, c), context=context)
             if beam.advance(o.data.squeeze(1)):
                 break
             h, c = hc
@@ -159,12 +147,3 @@ class G2PModel(PreTrainedG2PModel):
             c.data.copy_(c.data.index_select(1, beam.get_current_origin()))
         return torch.LongTensor(beam.get_hyp(0)).unsqueeze(0)
 
-    def add_optimizer_and_losses(self):
-        self.optimizer = SGD(self.parameters(), lr=self.lr, weight_decay=self.weight_decay)
-        # TODO move 102 to parameters
-        self.loss = nn.NLLLoss(ignore_index=102)
-
-    def maybe_move_to_cuda(self):
-        if self.use_cuda:
-            self.cuda()
-            self.loss = self.loss.cuda()

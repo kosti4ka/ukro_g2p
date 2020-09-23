@@ -6,8 +6,8 @@ import torch
 import numpy as np
 
 # TODO put this into config
-GRAPHEMES_PADDING = 36
-PHONEMES_PADDING = 102
+GRAPHEMES_PADDING = 37
+PHONEMES_PADDING = 99
 
 
 class LexiconDataset(Dataset):
@@ -18,6 +18,7 @@ class LexiconDataset(Dataset):
             self.data_keys_path = self.data_root / f'{split}_set'
         else:
             raise KeyError
+        #TODO take it from config file
         self.phonemes_path = self.data_root / 'phones'
         self.letters_path = self.data_root / 'letters'
 
@@ -49,8 +50,8 @@ class LexiconDataset(Dataset):
         return len(self.data_keys)
 
     def graphemes2idx(self, graphemes):
-        graphemes_idx = [self.grapheme2idx['<s>']]
-        graphemes_idx.extend([self.grapheme2idx[g] for g in graphemes])
+        # graphemes_idx = [self.grapheme2idx['<s>']]
+        graphemes_idx = [self.grapheme2idx[g] for g in graphemes]
         return graphemes_idx
 
     def phonemes2idx(self, phonemes):
