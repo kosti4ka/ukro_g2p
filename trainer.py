@@ -107,7 +107,6 @@ class Trainer(object):
                 self.optimizer.zero_grad()
                 loss.backward()
                 self.optimizer.step()
-                self.scheduler.step()
                 # if (batch_idx + 1) % self.logging_freq == 0:
                 #     log_str = self.construct_logging_str(loss_floats, epoch, num_batches, batch_idx + 1)
                 #     log(log_str)
@@ -146,6 +145,8 @@ class Trainer(object):
 
         avg_loss /= num_batches
         end_time = time.time()
+        if train:
+            self.scheduler.step(avg_loss)
         log_str = 'Epoch: {}, {} loss: {:.5f} time: {:.2f} sec'
         log_str = log_str.format(epoch, dataset_name, avg_loss, end_time - begin_time)
         log(log_str)
