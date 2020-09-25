@@ -1,22 +1,22 @@
 import torch.nn as nn
 import torch
-# from .decoder import Decoder
-# from .encoder import Encoder
-# from .converter import Converter
 from torch.autograd import Variable
-import torch.nn.functional as F
 import numpy as np
 from models.modules import Encoder, Decoder
 from models.modules import Beam
 from pathlib import Path
 import configparser
+from collections import namedtuple
+from torch.utils import model_zoo
 
+model_obj = namedtuple("model_obj", ["url", "config_path"])
 
-PRETRAINED_MODEL_MAP = {
-    'ukr-base-uncased': "../trained_models/g2p_ukr"
+pretrained_models = {
+    "ukro-base-uncased": model_obj(
+        url="https://github.com/kosti4ka/ukro_g2p/releases/download/ukro_base_uncased_v.0.1/ukro_base_uncased-epoch-99-d545c0d.th",
+        config_path=Path(__file__).parent / "../configs/ukro_base_uncased.config",
+    )
 }
-CONFIG_SUFFIX = '.config'
-WEIGHTS_SUFFIX = '.th'
 
 
 class G2PConfig(dict):
@@ -73,23 +73,21 @@ class PreTrainedG2PModel(nn.Module):
         self.config = config
 
     @classmethod
-    def from_pretrained(cls, pretrained_model_name):
+    def from_pretrained(cls, model_name):
 
-        if pretrained_model_name in PRETRAINED_MODEL_MAP:
-            base_path = Path(__file__).parent / PRETRAINED_MODEL_MAP[pretrained_model_name]
-            config_file = base_path.with_suffix(CONFIG_SUFFIX)
-            model_weigths_file = base_path.with_suffix(WEIGHTS_SUFFIX)
-        else:
+        if model_name not in pretrained_models:
             raise ValueError
 
         # load config
-        config = G2PConfig(config_file)  # TODO add metod from_file
+        config = G2PConfig(pretrained_models[model_name].config_path)  # TODO add metod from_file
 
         # instantiate model
         model = cls(config)
 
         # loading weights
-        model.load_state_dict(torch.load(model_weigths_file, map_location=lambda storage, loc: storage))
+        state_dict = model_zoo.load_url(pretrained_models[model_name].url,
+                                        progress=True, map_location=lambda storage, loc: storage)
+        model.load_state_dict(state_dict)
 
         return model
 

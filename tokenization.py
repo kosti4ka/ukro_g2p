@@ -1,10 +1,14 @@
 from pathlib import Path
 from models.g2p_model import G2PConfig
+from collections import namedtuple
 
-PRETRAINED_TOKENIZER_MAP = {
-    'ukr-base-uncased': "trained_models/g2p_ukr"
+tokenizer_obj = namedtuple("tokenizer_obj", ["config_path"])
+
+pretrained_tokenizers = {
+    "ukro-base-uncased": tokenizer_obj(
+        config_path=Path(__file__).parent / "configs/ukro_base_uncased.config",
+    )
 }
-CONFIG_SUFFIX = '.config'
 
 
 class G2PTokenizer(object):
@@ -23,16 +27,13 @@ class G2PTokenizer(object):
         return [self.idx2p[i] for i in ids if self.idx2p[i] not in ['<os>', '</os>']]
 
     @classmethod
-    def from_pretrained(cls, pretrained_tokenizer_name):
+    def from_pretrained(cls, tokenizer_name):
 
-        if pretrained_tokenizer_name in PRETRAINED_TOKENIZER_MAP:
-            base_path = Path(__file__).parent / PRETRAINED_TOKENIZER_MAP[pretrained_tokenizer_name]
-            config_file = base_path.with_suffix(CONFIG_SUFFIX)
-        else:
+        if tokenizer_name not in pretrained_tokenizers:
             raise ValueError
 
         # load config
-        config = G2PConfig(config_file)  # TODO add metod from_file
+        config = G2PConfig(pretrained_tokenizers[tokenizer_name].config_path)  # TODO add metod from_file
         tokenizer = cls(config)
 
         return tokenizer

@@ -6,7 +6,7 @@ import argparse
 import torch
 from torch.autograd import Variable
 
-from models.g2p_model import G2PModel, PRETRAINED_MODEL_MAP
+from models.g2p_model import G2PModel, pretrained_models
 from tokenization import G2PTokenizer
 
 
@@ -39,14 +39,14 @@ if __name__ == '__main__':
 
     # required
     parser.add_argument('word', type=str, help='Word to generate pronunciation for')
-    parser.add_argument('-m', '--model_name', required=False, type=str, default='ukr-base-uncased',
-                        choices=PRETRAINED_MODEL_MAP.keys(),
+    parser.add_argument('-m', '--model_name', required=False, type=str, default='ukro-base-uncased',
+                        choices=pretrained_models.keys(),
                         help='Trained model name')
 
     # parse
     script_args = parser.parse_args()
 
-    g2p = G2P('ukr-base-uncased')
+    g2p = G2P('ukro-base-uncased')
     pron = g2p(script_args.word)
 
     print(f"{' '.join(pron)}")
