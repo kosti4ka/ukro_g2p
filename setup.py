@@ -7,7 +7,7 @@ def read(fname):
 
 
 setup(
-    name="ukro_g2t_pytorch",
+    name="ukro_g2p",
     version="0.1",
     author="Kostiantyn Pylypenko",
     author_email="k.pylypenko@hotmail.com",
