@@ -1,5 +1,5 @@
 import os
-from setuptools import setup
+from setuptools import setup, find_packages
 from os import path
 
 
@@ -17,7 +17,7 @@ setup(
     license="MIT",
     keywords="Ukrainian grapheme to phoneme",
     url="https://github.com/kosti4ka/ukro_g2p",
-    packages=['ukro_g2p'],
+    packages=find_packages(),
     long_description=long_description,
     long_description_content_type='text/markdown',
     classifiers=[
