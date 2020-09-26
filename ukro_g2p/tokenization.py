@@ -1,5 +1,5 @@
 from pathlib import Path
-from models.g2p_model import G2PConfig
+from ukro_g2p.ukro_g2p import G2PConfig
 from collections import namedtuple
 
 tokenizer_obj = namedtuple("tokenizer_obj", ["config_path"])

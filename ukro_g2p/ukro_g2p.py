@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
-# !/usr/bin/env python3.6
-
 import argparse
 
 import torch
 from torch.autograd import Variable
 
-from models.g2p_model import G2PModel, pretrained_models
+from models.ukro_g2p import G2PModel, pretrained_models
 from tokenization import G2PTokenizer
 
 

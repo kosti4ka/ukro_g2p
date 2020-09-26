@@ -1,19 +1,16 @@
-import os
 import time
 from collections import OrderedDict
-from functools import reduce
 
 from pathlib import Path
 
-import numpy as np
 import torch
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
-from datasets.lexicon_datasets import LexiconDataset, _collate_fn
+from ukro_g2p.ukro_g2p import _collate_fn
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
 # from text import text_to_sequence
-from utils import infolog
+from ukro_g2p.ukro_g2p import infolog
 from tensorboardX import SummaryWriter
 from tqdm import tqdm
 
