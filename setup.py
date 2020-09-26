@@ -1,9 +1,11 @@
 import os
 from setuptools import setup
+from os import path
 
 
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 
 setup(
@@ -16,7 +18,8 @@ setup(
     keywords="Ukrainian grapheme to phoneme",
     url="https://github.com/kosti4ka/ukro_g2p",
     packages=['ukro_g2p'],
-    long_description=read('README.md'),
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Intended Audience :: Developers",
