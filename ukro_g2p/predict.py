@@ -1,10 +1,9 @@
 import argparse
-
 import torch
 from torch.autograd import Variable
 
-from models.ukro_g2p import G2PModel, pretrained_models
-from tokenization import G2PTokenizer
+from ukro_g2p.models.g2p_model import G2PModel, pretrained_models
+from ukro_g2p.tokenization import G2PTokenizer
 
 
 class G2P(object):

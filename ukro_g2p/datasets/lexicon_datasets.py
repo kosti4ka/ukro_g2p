@@ -1,7 +1,7 @@
 from torch.utils.data import Dataset
 from pathlib import Path
-from ukro_g2p.ukro_g2p import read_lexicon_dataset
-from ukro_g2p.ukro_g2p import load_list
+from ukro_g2p.predict import read_lexicon_dataset
+from ukro_g2p.predict import load_list
 import torch
 import numpy as np
 

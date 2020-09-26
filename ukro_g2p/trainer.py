@@ -6,11 +6,11 @@ from pathlib import Path
 import torch
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
-from ukro_g2p.ukro_g2p import _collate_fn
+from ukro_g2p.predict import _collate_fn
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
 # from text import text_to_sequence
-from ukro_g2p.ukro_g2p import infolog
+from ukro_g2p.predict import infolog
 from tensorboardX import SummaryWriter
 from tqdm import tqdm
 

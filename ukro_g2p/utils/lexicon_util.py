@@ -1,4 +1,4 @@
-from ukro_g2p.ukro_g2p import load_list
+from ukro_g2p.predict import load_list
 
 
 def read_lexicon_dataset(lexicon_dataset_path):

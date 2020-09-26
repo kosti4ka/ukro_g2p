@@ -4,12 +4,12 @@ import torch
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-from ukro_g2p.ukro_g2p import LexiconDataset, _collate_fn
-from ukro_g2p.ukro_g2p import G2PConfig, G2PModel
-from ukro_g2p.ukro_g2p import phoneme_error_rate
+from ukro_g2p.predict import LexiconDataset, _collate_fn
+from ukro_g2p.predict import G2PConfig, G2PModel
+from ukro_g2p.predict import phoneme_error_rate
 
 from pathlib import Path
-from ukro_g2p.ukro_g2p import dump
+from ukro_g2p.predict import dump
 
 
 def main(model, dataset, resume, out_dir):

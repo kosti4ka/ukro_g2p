@@ -2,8 +2,8 @@ import torch.nn as nn
 import torch
 from torch.autograd import Variable
 import numpy as np
-from ukro_g2p.ukro_g2p import Encoder, Decoder
-from ukro_g2p.ukro_g2p import Beam
+from ukro_g2p.models.modules import Encoder, Decoder
+from ukro_g2p.models.modules import Beam
 from pathlib import Path
 import configparser
 from collections import namedtuple

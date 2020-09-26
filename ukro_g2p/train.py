@@ -1,11 +1,11 @@
 import argparse
 
-from ukro_g2p.ukro_g2p import LexiconDataset
+from ukro_g2p.datasets.lexicon_datasets import LexiconDataset
 from ukro_g2p.trainer import Trainer
 from torch.optim import Adam
 import torch.nn as nn
 
-from ukro_g2p.ukro_g2p import G2PConfig, G2PModel
+from ukro_g2p.models.g2p_model import G2PConfig, G2PModel
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
