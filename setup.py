@@ -16,7 +16,7 @@ setup(
     keywords="Ukrainian grapheme to phoneme",
     url="https://github.com/kosti4ka/ukro_g2p",
     packages=['ukro_g2p'],
-    long_description=read('README'),
+    long_description=read('README.md'),
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Intended Audience :: Developers",
