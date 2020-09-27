@@ -1,4 +1,3 @@
-import os
 from setuptools import setup, find_packages
 from os import path
 
@@ -10,7 +9,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name="ukro_g2p",
-    version="0.1",
+    version="0.1.4",
     author="Kostiantyn Pylypenko",
     author_email="k.pylypenko@hotmail.com",
     description="NN based grapheme to phoneme model for Ukrainian language",
@@ -20,6 +19,7 @@ setup(
     packages=find_packages(),
     long_description=long_description,
     long_description_content_type='text/markdown',
+    include_package_data=True,
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Intended Audience :: Developers",

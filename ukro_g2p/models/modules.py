@@ -147,7 +147,7 @@ class Beam(object):
 
         # best_scores_id is flattened beam x word array, so calculate which
         # word and beam each score came from
-        prev_k = best_scores_id / num_words
+        prev_k = best_scores_id // num_words
         self.prevKs.append(prev_k)
         self.nextYs.append(best_scores_id - prev_k * num_words)
         # End condition is when n-best are EOS.
