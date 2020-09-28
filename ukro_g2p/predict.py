@@ -10,7 +10,9 @@ class G2P(object):
     def __init__(self, model_name):
         super().__init__()
 
-        self.model = G2PModel.from_pretrained(model_name)
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+        self.model = G2PModel.from_pretrained(model_name).to(self.device)
         self.tokenizer = G2PTokenizer.from_pretrained(model_name)
         self.model.eval()
 
@@ -21,8 +23,8 @@ class G2P(object):
         graphemes = self.tokenizer.convert_graphemes_to_ids(graphemes)
         g_length = [len(graphemes)]
 
-        graphemes = Variable(torch.LongTensor(graphemes).unsqueeze(0))
-        g_length = Variable(torch.LongTensor(g_length))
+        graphemes = Variable(torch.LongTensor(graphemes).unsqueeze(0)).to(self.device)
+        g_length = Variable(torch.LongTensor(g_length)).to(self.device)
 
         phonemes = self.model(graphemes, g_length).tolist()[0]
 
