@@ -9,7 +9,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name="ukro_g2p",
-    version="0.1.4",
+    version="0.1.5",
     author="Kostiantyn Pylypenko",
     author_email="k.pylypenko@hotmail.com",
     description="NN based grapheme to phoneme model for Ukrainian language",

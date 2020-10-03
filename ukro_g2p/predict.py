@@ -16,7 +16,7 @@ class G2P(object):
         self.tokenizer = G2PTokenizer.from_pretrained(model_name)
         self.model.eval()
 
-    def __call__(self, word):
+    def __call__(self, word, human_readable=False):
 
         # map word's chars into graphemes idx
         graphemes = self.tokenizer.tokenize_graphemes(word)
@@ -28,7 +28,7 @@ class G2P(object):
 
         phonemes = self.model(graphemes, g_length).tolist()[0]
 
-        return self.tokenizer.convert_ids_to_phonemes(phonemes)
+        return self.tokenizer.convert_ids_to_phonemes(phonemes) if not human_readable else self.tokenizer.convert_ids_to_human_phonemes(phonemes)
 
 
 if __name__ == '__main__':
@@ -40,11 +40,13 @@ if __name__ == '__main__':
     parser.add_argument('-m', '--model_name', required=False, type=str, default='ukro-base-uncased',
                         choices=pretrained_models.keys(),
                         help='Trained model name')
+    parser.add_argument('-hr', '--human_readable', required=False, action='store_true',
+                        help='Output human readable set of phonemes')
 
     # parse
     script_args = parser.parse_args()
 
     g2p = G2P('ukro-base-uncased')
-    pron = g2p(script_args.word)
+    pron = g2p(script_args.word, human_readable=True if script_args.human_readable else False)
 
     print(f"{' '.join(pron)}")

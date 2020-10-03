@@ -16,6 +16,7 @@ class G2PTokenizer(object):
 
         self.g2idx = {g: idx for idx, g in enumerate(config.graphemes)}
         self.idx2p = {idx: p for idx, p in enumerate(config.phonemes)}
+        self.idx2h = {idx: h for idx, h in enumerate(config.human_phonemes)}
 
     def tokenize_graphemes(self, word):
         return list(word)
@@ -25,6 +26,9 @@ class G2PTokenizer(object):
 
     def convert_ids_to_phonemes(self, ids):
         return [self.idx2p[i] for i in ids if self.idx2p[i] not in ['<os>', '</os>']]
+
+    def convert_ids_to_human_phonemes(self, ids):
+        return [self.idx2h[i] for i in ids if self.idx2h[i] not in ['<os>', '</os>']]
 
     @classmethod
     def from_pretrained(cls, tokenizer_name):

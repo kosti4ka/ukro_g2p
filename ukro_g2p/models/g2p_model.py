@@ -45,6 +45,8 @@ class G2PConfig(dict):
         self.decoder_padding_idx = self.phonemes.index(self.padding)
         self.decoder_bos_idx = self.phonemes.index(self.decoder_bos)
         self.decoder_eos_idx = self.phonemes.index(self.decoder_eos)
+        # reading human phonemes
+        self.human_phonemes = config_file['VocabConfig']['human_phonemes'].split()
 
         # encoder config
         self.encoder_d_embed = int(config_file['EncoderConfig']['encoder_d_embed'])
