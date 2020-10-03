@@ -18,7 +18,7 @@ class G2PTokenizer(object):
         self.idx2p = {idx: p for idx, p in enumerate(config.phonemes)}
 
     def tokenize_graphemes(self, word):
-        return ['<s>'] + list(word)
+        return list(word)
 
     def convert_graphemes_to_ids(self, graphemes):
         return [self.g2idx[g] for g in graphemes]
