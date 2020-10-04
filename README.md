@@ -1,4 +1,4 @@
-# ukro_g2p
+# Ukrainian G2P model
 
 ## Installation
 
