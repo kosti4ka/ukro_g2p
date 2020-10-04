@@ -20,7 +20,7 @@ g2p('фонетика', human_readable=True)
 
 Jupyter notebook with the example: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1bptBFKWtuBVVbAA_e_WB5tL-N4tJ4xyq#scrollTo=JGG5NcltvXTx?usp=sharing)
 
-# Web app
+## Web app
 https://ukro-g2p.herokuapp.com//
 
 Code for the web app: https://github.com/kosti4ka/ukro_g2p_demo
