@@ -175,6 +175,10 @@ Code for the web app: https://github.com/kosti4ka/ukro_g2p_demo
             <td>T</td>
         </tr>
         <tr>
+            <td>[ф]</td>
+            <td>F</td>
+        </tr>
+        <tr>
             <td>[х]</td>
             <td>X</td>
         </tr>
